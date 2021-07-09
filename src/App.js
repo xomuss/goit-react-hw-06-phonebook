@@ -25,11 +25,11 @@ class App extends Component {
   //   }
   // }
 
-  deleteContact = contactId => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
-    }));
-  };
+  // deleteContact = contactId => {
+  //   this.setState(prevState => ({
+  //     contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+  //   }));
+  // };
 
   // formSubmitHandler = ({ name, number }) => {
   //   const contact = {
@@ -70,11 +70,8 @@ class App extends Component {
         <h1>Phone Book</h1>
         <Form onSubmit={this.formSubmitHandler} />
         <h2>Contacts</h2>
-        {/* <Filter onChange={this.changeFilter} value={this.state.filter} /> */}
-        {/* <ContactsList
-          contactsData={visibleContacts}
-          onDeleteContact={this.deleteContact}
-        /> */}
+        <Filter />
+        <ContactsList />
       </>
     );
   }

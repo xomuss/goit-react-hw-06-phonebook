@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import actions from '../../redux/phonebook/phonebook-actions';
 import styles from './ContactList.module.css';
 
 const ContactsList = ({ contactsData, onDeleteContact }) => (
@@ -14,4 +16,19 @@ const ContactsList = ({ contactsData, onDeleteContact }) => (
   </ul>
 );
 
-export default ContactsList;
+const mapStateToProps = state => {
+  const { items, filter } = state.contacts;
+  const filterNormalize = filter.toLowerCase();
+  const visibleContacts = items.filter(item =>
+    item.name.toLowerCase().includes(filterNormalize),
+  );
+  return {
+    contactsData: visibleContacts,
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  onDeleteContact: id => dispatch(actions.deleteContact(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactsList);
