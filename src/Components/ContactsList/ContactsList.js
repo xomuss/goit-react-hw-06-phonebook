@@ -16,16 +16,17 @@ const ContactsList = ({ contactsData, onDeleteContact }) => (
   </ul>
 );
 
-const mapStateToProps = state => {
-  const { items, filter } = state.contacts;
+const getVisibleContacts = (allContacts, filter) => {
   const filterNormalize = filter.toLowerCase();
-  const visibleContacts = items.filter(item =>
-    item.name.toLowerCase().includes(filterNormalize),
+
+  return allContacts.filter(contact =>
+    contact.name.toLowerCase().includes(filterNormalize),
   );
-  return {
-    contactsData: visibleContacts,
-  };
 };
+
+const mapStateToProps = ({ contacts: { items, filter } }) => ({
+  contactsData: getVisibleContacts(items, filter),
+});
 
 const mapDispatchToProps = dispatch => ({
   onDeleteContact: id => dispatch(actions.deleteContact(id)),
