@@ -21,7 +21,18 @@ class Form extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.onSubmit(this.state);
+    const foundName = this.props.contacts.find(({ name }) =>
+      name.includes(this.state.name),
+    );
+    if (!foundName) {
+      this.props.onSubmit(this.state);
+      this.reset();
+      return;
+    }
+    alert('this name already exist');
+
+    // this.props.onSubmit(this.state);
+    // : alert('This name already exist');
 
     this.reset();
   };
@@ -73,4 +84,8 @@ const mapDispatchToProps = dispatch => ({
   onSubmit: cont => dispatch(actions.addContact(cont)),
 });
 
-export default connect(null, mapDispatchToProps)(Form);
+const mapStateToProps = state => ({
+  contacts: state.contacts.items,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
